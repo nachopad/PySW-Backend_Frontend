@@ -1,0 +1,71 @@
+<div class="container mt-3 mb-5">
+    <div class="row">
+      <div class="col-4"></div>
+      <div class="col-4 border border-1 border-black grey-light">
+        <h4 class="justify-content-center align-content-center text-center mt-3 mb-3 bg-success text-white" *ngIf="accion=='new'"> <i class="bi bi-list size-arrow"></i> GESTION DE PRODUCTOS <i class="bi bi-list size-arrow"></i></h4>
+        <form #productoForm="ngForm">
+          <div class="mb-3">
+            <label for="nombreprod" class="form-label fw-semibold">* Nombre del producto</label>
+            <input type="text" class="form-control" id="nombreprod" name="nombreprod" aria-describedby="nombreprod" [(ngModel)]="producto.nombre" #nombreprod="ngModel" required/>
+            <div *ngIf="nombreprod.invalid && (nombreprod.dirty || nombreprod.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="nombreprod.errors?.['required']" class="alert-danger">
+                Debe ingresar el nombre del producto antes de continuar con el registro.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="iddescripcion" class="form-label fw-semibold">* Descripcion</label>
+            <textarea name="iddescripcion" class="form-control" id="iddescripcion" rows="3" [(ngModel)]="producto.descripcion" #descripcion="ngModel" required></textarea>
+            <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="descripcion.errors?.['required']" class="alert-danger">
+                Debe ingresar la descripcion del producto antes de continuar con el registro.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="urlimagen" class="form-label fw-semibold">* URL Imagen</label>
+            <input type="text" class="form-control" id="urlimagen" name="urlimagen" aria-describedby="urlimagen" [(ngModel)]="producto.imagen" #urlimagen="ngModel" required/>
+            <div *ngIf="urlimagen.invalid && (urlimagen.dirty || urlimagen.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="urlimagen.errors?.['required']" class="alert-danger">
+                Debe ingresar la URL de imagen del producto antes de continuar con el registro.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="precio" class="form-label fw-semibold">* Precio</label>
+            <input type="number" class="form-control" id="precio" name="precio" aria-describedby="precio" [(ngModel)]="producto.precio" required #precio="ngModel" precio-negativo />
+            <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="precio.errors?.['required']" class="alert-danger">
+                Debe ingresar un precio antes de registrar o modificar un ticket.
+              </div>
+              <div *ngIf="precio.errors?.['valorNegativo']" class="alert-danger">
+               Debe ingresar un precio positivo mayor a 0.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="stock" class="form-label fw-semibold">* Stock</label>
+            <input type="number" class="form-control" id="stock" name="stock" aria-describedby="stock" [(ngModel)]="producto.stock" required #stock="ngModel" precio-negativo />
+            <div *ngIf="stock.invalid && (stock.dirty || stock.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="stock.errors?.['required']" class="alert-danger">
+                Debe ingresar uns cantidad de stock antes de registrar o modificar un ticket.
+              </div>
+              <div *ngIf="stock.errors?.['valorNegativo']" class="alert-danger">
+               Debe ingresar un stock positivo mayor a 0.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="iddestacado" class="form-label fw-semibold me-1">Destacado</label>
+            <input name="destacado" type="checkbox" id="iddestacado" (ngModelChange)="actualizarDestacado()" [(ngModel)]="producto.destacado">
+          </div>
+          <div class="justify-content-center align-content-center text-center mb-4">
+            <button type="button" class="btn btn-success fw-bold text-white" (click)="agregarProducto()" *ngIf="accion=='new'" [disabled]="!productoForm.valid">REGISTRAR <i class="bi bi-arrow-right"></i> </button>
+          </div>
+          <div>
+          </div>
+        </form>
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </div>
