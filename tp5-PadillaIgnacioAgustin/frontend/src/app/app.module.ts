@@ -10,6 +10,8 @@ import { ValidacionPrecioDirective } from './directivas/validacion-precio.direct
 import { ValidacionDniDirective } from './directivas/validacion-dni.directive';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ConverterListComponent } from './components/converter-list/converter-list.component';
+import { ConverterFormComponent } from './components/converter-form/converter-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { FormsModule } from '@angular/forms';
     ProductoFormComponent,
     HeaderComponent,
     ValidacionPrecioDirective,
-    ValidacionDniDirective
+    ValidacionDniDirective,
+    ConverterListComponent,
+    ConverterFormComponent
   ],
   imports: [
     BrowserModule,

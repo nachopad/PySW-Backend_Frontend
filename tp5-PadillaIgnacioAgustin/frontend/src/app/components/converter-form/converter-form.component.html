@@ -1,0 +1,64 @@
+<div class="container mt-1 pb-3 pt-3 d-flex justify-content-center">
+    <div class="col-md-6 col-12 text-white">
+            <form #convertForm="ngForm">
+              <div class="navy-blue text-center">
+                <h5>Conversor de Divisas</h5>
+              </div>
+              <div class="navy-blue-light bg-gradient p-2">
+                  <div class="mb-2 text-start">
+                      <label for="email" class="form-label">* Email</label>
+                      <input type="email" class="form-control text-end rounded-0" id="email" placeholder="Direccion de Email" [(ngModel)]="transaccion.emailCliente" name="email" required #email="ngModel">
+                      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger rounded-0 mt-1">
+                        <div *ngIf="email.errors?.['required']" class="alert-danger">
+                          Debe ingresar un correo electrónico antes de continuar.
+                        </div>
+                      </div>
+                    </div>
+  
+                <div class="mb-2 text-start">
+                  <label for="cantidad" class="form-label">* Cantidad</label>
+                  <input type="number" class="form-control text-end rounded-0" id="cantidad" placeholder="Cantidad" [(ngModel)]="transaccion.cantidadOrigen" name="cantidad" required #ingreso="ngModel" caracter-noNumero>
+                  <div *ngIf="ingreso.invalid && (ingreso.dirty || ingreso.touched)" class="alert alert-danger rounded-0 mt-1">
+                    <div *ngIf="ingreso.errors?.['required']" class="alert-danger">
+                      Debe ingresar un número antes de realizar la conversión.
+                    </div>
+                    <div *ngIf="ingreso.errors?.['caracterNoNumero']" class="alert-danger">
+                      Solo puede ingresar un valor numérico para convertir.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-2 text-start">
+                  <label for="demoneda" class="form-label">* De</label>
+                  <select class="form-select rounded-0" [(ngModel)]="transaccion.monedaOrigen" id="demoneda" name="demoneda" #origin="ngModel" required>
+                    <option *ngFor="let mon of monedas" [value]="mon.symbol">{{mon.symbol}} - {{mon.name}}</option>
+                  </select>
+                  <div *ngIf="origin.invalid && (origin.dirty || origin.touched)" class="alert alert-danger rounded-0 mt-1">
+                    <div *ngIf="origin.errors?.['required']" class="alert-danger">
+                      Debe seleccionar un tipo de moneda antes de realizar la conversión.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-2 text-start">
+                  <label for="amoneda" class="form-label">* A</label>
+                  <select class="form-select rounded-0" [(ngModel)]="transaccion.monedaDestino" id="amoneda" name="amoneda" #destiny="ngModel" required>
+                    <option *ngFor="let mon of monedas" [value]="mon.symbol">{{mon.symbol}} - {{mon.name}}</option>
+                  </select>
+                  <div *ngIf="destiny.invalid && (destiny.dirty || destiny.touched)" class="alert alert-danger rounded-0 mt-1">
+                    <div *ngIf="destiny.errors?.['required']" class="alert-danger">
+                      Debe seleccionar un tipo de moneda antes de realizar la conversión.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <input type="text" class="form-control rounded-0" id="resultado" disabled value="{{transaccion.cantidadDestino}}" name="resultado">
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-warning rounded-0 text-white fw-bold" (click)="convertCurrency()" [disabled]="!convertForm.valid">Convertir <i class="bi bi-arrow-right text-white float-end size-arrow"></i></button>
+                </div>
+              </div>
+            </form>
+      </div>
+  </div>
+  <div class="container mt-1 mb-3 d-flex justify-content-center">
+    <button type="submit" class="btn btn-success rounded-0 text-white fw-bold" (click)="verLista()">VER LISTA <i class="bi bi-list text-white float-end size-arrow"></i></button>
+  </div>
