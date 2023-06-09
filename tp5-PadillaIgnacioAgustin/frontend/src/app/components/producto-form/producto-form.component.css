@@ -1,3 +1,13 @@
 .grey-light{
     background-color: #dcdcdc;
 }
+
+input[type=checkbox]
+{
+accent-color: #198cff;
+mix-blend-mode: multiply;
+}
+
+input[type=checkbox] {
+    transform: scale(1.3);
+}

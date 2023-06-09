@@ -40,7 +40,6 @@ export class ConverterListComponent implements OnInit {
         this.transacciones.push(unaTransaccion);
         unaTransaccion = new Transaccion();
        });
-       console.log(this.transacciones);
       },
       (error) => { console.log(error) }
     )

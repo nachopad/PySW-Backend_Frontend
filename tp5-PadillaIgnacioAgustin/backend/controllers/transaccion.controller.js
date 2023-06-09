@@ -78,11 +78,14 @@ transaccionCtrl.getTransaccionEmail = async (req, res) => {
  * @returns {Promise<void>} Una promesa que resuelve cuando se obtienen las transacciones y se envía la respuesta.
  */
 transaccionCtrl.getTransaccionOrigenDestino = async (req, res) => {
+  let criteria={};
   try {
-    if(((req.query.origen != null)&&(req.query.origen!="")) && ((req.query.destino!=null)&&(req.query.destino!=""))){
-      const transaccion = await Transaccion.find({ monedaOrigen: req.query.origen, monedaDestino: req.query.destino });
-      res.json(transaccion);
+    if(((req.query.origen != null)&&(req.query.origen!="")) || ((req.query.destino!=null)&&(req.query.destino!=""))){
+      criteria.monedaOrigen = req.query.origen;
+      criteria.monedaDestino = req.query.destino;
     }
+    const transaccion = await Transaccion.find(criteria);
+    res.json(transaccion);
   } catch (error) {
     res.status(500).json({
       status: '0',

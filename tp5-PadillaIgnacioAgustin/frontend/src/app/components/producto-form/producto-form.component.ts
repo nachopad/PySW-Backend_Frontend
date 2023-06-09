@@ -33,6 +33,7 @@ export class ProductoFormComponent implements OnInit {
       (result) => {
         if(result.status==1){
           alert(result.msg);
+          this.router.navigate(['producto-list']);
         }
       },
       (error) => { console.log(error) }
@@ -48,6 +49,25 @@ export class ProductoFormComponent implements OnInit {
     } else {
       this.producto.destacado=false;
     }
+  }
+
+  onFileSelected(event: any) {
+    const files = event.target.files[0];
+    if (files.size > 80000) {
+      alert('El tamaño  de imagen maximo es 80 KB');
+      event.target.value = null;
+    }else{
+        const reader = new FileReader();
+        reader.onload = () => {
+        let base64 = reader.result as string;
+        this.producto.imagen = base64;
+      };
+      reader.readAsDataURL(files);
+    }
+  }
+
+  cancelarOperacion(){
+    this.router.navigate(['producto-list']);
   }
 
 }

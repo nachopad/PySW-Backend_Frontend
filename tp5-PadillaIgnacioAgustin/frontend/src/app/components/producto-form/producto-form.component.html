@@ -1,7 +1,7 @@
 <div class="container mt-3 mb-5">
     <div class="row">
-      <div class="col-4"></div>
-      <div class="col-4 border border-1 border-black grey-light">
+      <div class="col-3"></div>
+      <div class="col-6 border border-1 border-black grey-light">
         <h4 class="justify-content-center align-content-center text-center mt-3 mb-3 bg-success text-white" *ngIf="accion=='new'"> <i class="bi bi-list size-arrow"></i> GESTION DE PRODUCTOS <i class="bi bi-list size-arrow"></i></h4>
         <form #productoForm="ngForm">
           <div class="mb-3">
@@ -23,11 +23,13 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="urlimagen" class="form-label fw-semibold">* URL Imagen</label>
-            <input type="text" class="form-control" id="urlimagen" name="urlimagen" aria-describedby="urlimagen" [(ngModel)]="producto.imagen" #urlimagen="ngModel" required/>
+            <label for="urlimagen" class="form-label fw-semibold">* Imagen</label>
+            <div>
+              <input type="file" name="urlimagen" id="urlimagen" accept="image/*" class="form-control-file d-block" (change)="onFileSelected($event)" ngModel #urlimagen="ngModel" required/>
+            </div>
             <div *ngIf="urlimagen.invalid && (urlimagen.dirty || urlimagen.touched)" class="alert alert-danger rounded-0 mt-1">
               <div *ngIf="urlimagen.errors?.['required']" class="alert-danger">
-                Debe ingresar la URL de imagen del producto antes de continuar con el registro.
+                Debe ingresar la imagen del producto antes de continuar con el registro.
               </div>
             </div>
           </div>
@@ -55,17 +57,18 @@
               </div>
             </div>
           </div>
-          <div class="mb-3">
-            <label for="iddestacado" class="form-label fw-semibold me-1">Destacado</label>
+          <div class="mb-3 justify-content-center align-content-center text-center">
+            <label for="iddestacado" class="form-label fw-semibold me-1">(Destacado)</label>
             <input name="destacado" type="checkbox" id="iddestacado" (ngModelChange)="actualizarDestacado()" [(ngModel)]="producto.destacado">
           </div>
           <div class="justify-content-center align-content-center text-center mb-4">
             <button type="button" class="btn btn-success fw-bold text-white" (click)="agregarProducto()" *ngIf="accion=='new'" [disabled]="!productoForm.valid">REGISTRAR <i class="bi bi-arrow-right"></i> </button>
+            <button type="button" class="btn btn-secondary fw-bold text-white" (click)="cancelarOperacion()">CANCELAR</button>
           </div>
           <div>
           </div>
         </form>
       </div>
-      <div class="col-4"></div>
+      <div class="col-3"></div>
     </div>
   </div>

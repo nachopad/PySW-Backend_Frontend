@@ -7,10 +7,13 @@
               <div class="navy-blue-light bg-gradient p-2">
                   <div class="mb-2 text-start">
                       <label for="email" class="form-label">* Email</label>
-                      <input type="email" class="form-control text-end rounded-0" id="email" placeholder="Direccion de Email" [(ngModel)]="transaccion.emailCliente" name="email" required #email="ngModel">
+                      <input type="email" class="form-control text-end rounded-0" id="email" placeholder="Direccion de Email" [(ngModel)]="transaccion.emailCliente" name="email" required #email="ngModel" email>
                       <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger rounded-0 mt-1">
                         <div *ngIf="email.errors?.['required']" class="alert-danger">
                           Debe ingresar un correo electrónico antes de continuar.
+                        </div>
+                        <div *ngIf="email.errors?.['email']" class="alert-danger">
+                          Debe ingresar un formato de email valido.
                         </div>
                       </div>
                     </div>

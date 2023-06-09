@@ -4,7 +4,6 @@
     <table class="table table-striped border border-1 border-black" *ngIf="transacciones.length!==0">
         <thead>
             <tr>
-            <th>#ID</th>
             <th>CLIENTE</th>
             <th>ORIGEN</th>
             <th>CANT. ORIGEN</th>
@@ -16,12 +15,11 @@
         </thead>
         <tbody>
             <tr *ngFor="let tran of transacciones">
-            <td>{{ tran._id}}</td>
             <td>{{ tran.emailCliente}}</td>
             <td>{{ tran.monedaOrigen}}</td>
-            <td>{{ tran.cantidadOrigen | currency:'':true:'1.2-2'}}</td> 
+            <td>{{ tran.cantidadOrigen | currency:'':'symbol':'1.2-2'}}</td> 
             <td>{{ tran.monedaDestino }}</td>
-            <td>{{ tran.cantidadDestino | currency:'':true:'1.2-2'}}</td> 
+            <td>{{ tran.cantidadDestino | currency:'':'symbol':'1.2-2'}}</td> 
             <td>{{ tran.tasaConversion | number:'0.0-4'}}</td>   
             <td>
         </td>
@@ -31,7 +29,6 @@
     </div>
     
 </div>
-
 <div class="container border border-2 border-black m-5 grey-light bg-gradient size-div d-flex justify-content-center align-items-center" *ngIf="transacciones.length===0">
     <div class="row">
         <div class="col-12">
@@ -47,7 +44,6 @@
 <div class="container justify-content-start align-content-start text-start">
     <button type="button" class="btn btn-success mt-2 mb-2 fw-bold" (click)="agregarTransaccion()" *ngIf="transacciones.length!==0">REGISTRAR <i class="bi bi-clipboard2-plus"></i></button> 
 </div>
-
 <div class="container  mt-2">
     <button type="button" class="btn btn-primary" (click)="estadoResumen()" *ngIf="element==false && transacciones.length!==0">Filtrar (+)</button>
     <button type="button" class="btn btn-primary" (click)="estadoResumen()" *ngIf="element==true">Ocultar (-)</button>
@@ -85,9 +81,7 @@
                 </div>
               </div>
         </div>
-
         <button type="button" class="btn btn-primary mt-2 mb-2 fw-semibold" (click)="realizarFiltro()" [disabled]="!destiny.valid" *ngIf="element==true">FILTRAR <i class="bi bi-arrow-repeat"></i></button>
-
         <div class="border border-2 border-black mt-2 mb-2 grey-light bg-gradient size-div d-flex justify-content-center align-items-center" *ngIf="transaccionesFiltradas.length===0 && activated==true">
             <div class="row">
                 <div class="col-12">
@@ -97,7 +91,6 @@
                 </div>
             </div>
         </div>
-
         <div class="border border-2 border-black mt-2 mb-2 grey-light bg-gradient size-div d-flex justify-content-center align-items-center" *ngIf="transaccionesFiltradas.length===0 && activated==false">
             <div class="row">
                 <div class="col-12">
@@ -107,11 +100,9 @@
                 </div>
             </div>
         </div>
-        
         <table class="table table-striped justify-content-center align-content-center text-center border border-1 border-black" *ngIf="transaccionesFiltradas.length!==0">
             <thead>
                 <tr>
-                <th>#ID</th>
                 <th>CLIENTE</th>
                 <th>ORIGEN</th>
                 <th>CANT. ORIGEN</th>
@@ -123,12 +114,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let tran of transaccionesFiltradas">
-                <td>{{ tran._id}}</td>
                 <td>{{ tran.emailCliente}}</td>
                 <td>{{ tran.monedaOrigen}}</td>
-                <td>{{ tran.cantidadOrigen | currency:'':true:'1.2-2'}}</td> 
+                <td>{{ tran.cantidadOrigen | currency:'':'symbol':'1.2-2'}}</td> 
                 <td>{{ tran.monedaDestino }}</td>
-                <td>{{ tran.cantidadDestino | currency:'':true:'1.2-2'}}</td> 
+                <td>{{ tran.cantidadDestino | currency:'':'symbol':'1.2-2'}}</td> 
                 <td>{{ tran.tasaConversion | number:'0.0-4'}}</td>   
                 <td>
             </td>
