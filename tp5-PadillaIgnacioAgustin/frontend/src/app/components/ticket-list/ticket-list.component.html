@@ -1,0 +1,117 @@
+<div class="container justify-content-center align-content-center text-center mt-2" *ngIf="tickets.length!==0">
+    <div class=""> 
+        <div><h4 class="mt-2 mb-2 bg-primary text-white border border-1 border-black fw-bold">LISTA DE TICKETS VENDIDOS</h4></div>
+    <table class="table table-striped border border-1 border-black" *ngIf="tickets.length!==0">
+        <thead>
+            <tr>
+            <th>#ID</th>
+            <th>PRECIO</th>
+            <th>FECHA DE COMPRA</th>
+            <th>ESPECTADOR</th>
+            <th>CATEGORIA</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ticket of tickets">
+            <td>{{ticket._id}}</td>
+            <td>{{ticket.precioTicket | currency:'ARS ':true:'1.2-2'}}</td>
+            <td>{{ticket.fechaCompra | date: 'dd/MM/yyyy'}}</td>
+            <td>{{ticket.espectador.apellido}}, {{ticket.espectador.nombre}}</td>
+            <td>{{ticket.categoriaEspectador | formatoEspectador}}</td>  
+            <td>
+              <button type="button" class="btn btn bg-danger text-white" (click)="eliminarTicket(ticket._id)"><i class="bi bi-trash3-fill"></i></button>
+              <button type="button" class="btn btn bg-warning" (click)="modificarTicket(ticket._id)"><i class="bi bi-pencil-square"></i></button> 
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    
+  </div>
+  <div class="container border border-2 border-black m-5 grey-light bg-gradient size-div d-flex justify-content-center align-items-center" *ngIf="tickets.length===0">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex flex-column align-items-center">
+                <h5 class="mt-3 bg-danger text-white rounded-3 fw-bold border border-1 border-black p-4">NO HAY TICKETS REGISTRADOS <i class="bi bi-database-x"></i></h5>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-success border border-1 border-black fw-bold" (click)="agregarTicket()">REGISTRAR <i class="bi bi-clipboard2-plus"></i></button> 
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="container justify-content-start align-content-start text-start">
+    <button type="button" class="btn btn-success mt-2 mb-3 fw-bold" (click)="agregarTicket()" *ngIf="tickets.length!==0">REGISTRAR <i class="bi bi-clipboard2-plus"></i></button> 
+  </div>
+  
+  <div class="container  mt-2">
+      <button type="button" class="btn btn-primary" (click)="estadoResumen()" *ngIf="element==false && tickets.length!==0">Filtrar (+)</button>
+      <button type="button" class="btn btn-primary" (click)="estadoResumen()" *ngIf="element==true">Ocultar (-)</button>
+      <div class="container border border-1 border-black mb-5 mt-2" *ngIf="element==true"> 
+          <div class=""><h4 class="justify-content-center align-content-center text-center mt-2 bg-warning text-white border border-1 border-black fw-bold">REALIZAR FILTRO</h4></div>
+          <div class="mb-3">
+              <label for="categoria" class="form-label fw-semibold">* Categoria</label>
+              <div class="row">
+                  <div class="col-3 mb-1 mt-1">
+                      <select class="form-select" id="categoria" aria-label="Default select example" name="categoria" [(ngModel)]="filtroCategoria" required #categoria="ngModel">
+                          <option value="e">Extranjero</option>
+                          <option value="l">Local</option>
+                      </select>
+                  </div>
+              </div>
+              <div *ngIf="categoria.invalid && (categoria.dirty || categoria.touched)" class="alert alert-danger rounded-0 mt-1">
+                <div *ngIf="categoria.errors?.['required']" class="alert-danger">
+                  Debe seleccionar un tipo de espectador antes de registrar o modificar un ticket.
+                </div>
+              </div>
+          </div>
+          <button type="button" class="btn btn-primary mb-2 fw-semibold" (click)="realizarFiltro()" [disabled]="!categoria.valid" *ngIf="element==true">FILTRAR <i class="bi bi-arrow-repeat"></i></button>
+  
+          <div class="border border-2 border-black mt-2 mb-2 grey-light bg-gradient size-div d-flex justify-content-center align-items-center" *ngIf="ticketsFiltrados.length===0 && activated==true">
+              <div class="row">
+                  <div class="col-12">
+                      <div class="d-flex flex-column align-items-center">
+                          <h5 class="mt-3 bg-danger text-white rounded-3 fw-bold border border-1 border-black p-4">NO HAY TICKETS REGISTRADOS CON LAS ESPECIFICACIONES INGRESADAS <i class="bi bi-database-x"></i></h5>      
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="border border-2 border-black mt-2 mb-2 grey-light bg-gradient size-div d-flex justify-content-center align-items-center" *ngIf="ticketsFiltrados.length===0 && activated==false">
+              <div class="row">
+                  <div class="col-12">
+                      <div class="d-flex flex-column align-items-center">
+                          <h5 class="mt-3 bg-warning text-white rounded-3 fw-bold border border-1 border-black p-4">INGRESE LAS ESPECIFICACIONES Y REALICE EL FILTRADO <i class="bi bi-arrow-up-left"></i></h5>      
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+          <table class="table table-striped justify-content-center align-content-center text-center border border-1 border-black" *ngIf="ticketsFiltrados.length!==0">
+              <thead>
+                  <tr>
+                  <th>#ID</th>
+                  <th>PRECIO</th>
+                  <th>FECHA DE COMPRA</th>
+                  <th>ESPECTADOR</th>
+                  <th>CATEGORIA</th>
+                  <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let ticket of ticketsFiltrados">
+                  <td>{{ticket._id}}</td>
+                  <td>{{ticket.precioTicket | currency:'ARS ':true:'1.2-2'}}</td>
+                  <td>{{ticket.fechaCompra | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{ticket.espectador.apellido}}, {{ticket.espectador.nombre}}</td>
+                  <td>{{ticket.categoriaEspectador | formatoEspectador}}</td>  
+                  <td>
+                    <button type="button" class="btn btn bg-danger text-white" (click)="eliminarTicket(ticket._id)"><i class="bi bi-trash3-fill"></i></button>
+                    <button type="button" class="btn btn bg-warning" (click)="modificarTicket(ticket._id)"><i class="bi bi-pencil-square"></i></button> 
+                  </td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>

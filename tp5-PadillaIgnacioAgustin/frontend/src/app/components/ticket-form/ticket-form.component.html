@@ -1,0 +1,68 @@
+<div class="container mt-3 mb-5">
+    <div class="row">
+      <div class="col-4"></div>
+      <div class="col-4 border border-1 border-black grey-light">
+        <h4 class="justify-content-center align-content-center text-center mt-3 mb-3 bg-success text-white" *ngIf="accion=='new'"><i class="bi bi-ticket-detailed"></i> GESTION DE TICKETS <i class="bi bi-ticket-detailed"></i></h4>
+        <h4 class="justify-content-center align-content-center text-center mt-3 mb-3 bg-warning text-white" *ngIf="accion=='update'"><i class="bi bi-ticket-detailed"></i> GESTION DE TICKETS <i class="bi bi-ticket-detailed"></i></h4>
+        <form #ticketForm="ngForm">
+          <div class="mb-3">
+            <label for="precioTicket" class="form-label fw-semibold">* Precio</label>
+            <input type="number" class="form-control" id="precioTicket" name="precioTicket" aria-describedby="precioTicket" [(ngModel)]="ticket.precioTicket" required #precioTicket="ngModel" precio-negativo />
+            <div *ngIf="precioTicket.invalid && (precioTicket.dirty || precioTicket.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="precioTicket.errors?.['required']" class="alert-danger">
+                Debe ingresar un precio antes de registrar o modificar un ticket.
+              </div>
+              <div *ngIf="precioTicket.errors?.['valorNegativo']" class="alert-danger">
+               Debe ingresar un precio positivo mayor a 0.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="fechaCompra" class="form-label fw-semibold">* Precio</label>
+            <input type="date" class="form-control" id="fechaCompra" name="fechaCompra" aria-describedby="fechaCompra" [(ngModel)]="ticket.fechaCompra" required #fechaCompra="ngModel" />
+            <div *ngIf="fechaCompra.invalid && (fechaCompra.dirty || fechaCompra.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="fechaCompra.errors?.['required']" class="alert-danger">
+                Debe ingresar un precio antes de registrar o modificar un ticket.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="espectador" class="form-label fw-semibold">* Espectador</label>
+            <select class="form-select" id="espectador" aria-label="Default select example" name="espectador" [(ngModel)]="ticket.espectador" (ngModelChange)="calcularDescuento()" required #espectador="ngModel">
+                <option *ngFor="let espectador of espectadores" [ngValue]="espectador">{{espectador.apellido}}, {{espectador.nombre}}</option>
+            </select>
+            <div *ngIf="espectador.invalid && (espectador.dirty || espectador.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="espectador.errors?.['required']" class="alert-danger">
+                Debe seleccionar un tipo de espectador antes de registrar o modificar un ticket.
+              </div>
+            </div>
+        </div>
+          <div class="mb-3">
+            <label for="categoriaEspectador" class="form-label fw-semibold">* Categoria</label>
+            <select class="form-select" id="categoriaEspectador" aria-label="Default select example" name="categoriaEspectador" [(ngModel)]="ticket.categoriaEspectador" (ngModelChange)="calcularDescuento()" required #categoriaEspectador="ngModel">
+                <option value="e">Extranjero</option>
+                <option value="l">Local</option>
+            </select>
+            <div *ngIf="categoriaEspectador.invalid && (categoriaEspectador.dirty || categoriaEspectador.touched)" class="alert alert-danger rounded-0 mt-1">
+              <div *ngIf="categoriaEspectador.errors?.['required']" class="alert-danger">
+                Debe seleccionar un tipo de espectador antes de registrar o modificar un ticket.
+              </div>
+            </div>
+        </div>
+          <div class="mb-3">
+            <div><label for="precioCobrado" class="form-label fw-semibold bg-warning" *ngIf="(ticket.categoriaEspectador==='e' || ticket.categoriaEspectador==='l') && (ticket.precioTicket!==0) && ticket.categoriaEspectador==='l'">20% de reintegro</label></div>
+            <div><label for="precioCobrado" class="form-label bg-success text-white" *ngIf="(ticket.precioTicket!==0) && ticket.categoriaEspectador==='l'"><b>Precio final</b>: <del>{{precioInicial}}</del> - {{precioFinal | currency:'ARS ':true:'1.2-2'}}</label></div>
+            <div><label for="precioCobrado" class="form-label bg-success text-white" *ngIf="(ticket.precioTicket!==0) && ticket.categoriaEspectador==='e'"><b>Precio final</b>: {{precioFinal | currency:'ARS ':true:'1.2-2'}}</label></div>    
+          </div>
+          <div class="justify-content-center align-content-center text-center mb-4">
+            <button type="button" class="btn btn-success fw-bold text-white" (click)="agregarTicket()" *ngIf="accion=='new'" [disabled]="!ticketForm.valid">REGISTRAR <i class="bi bi-arrow-right"></i> </button>
+            <button type="button" class="btn btn-warning fw-bold text-white" (click)="modificarTicket()" *ngIf="accion=='update'" [disabled]="!ticketForm.valid">MODIFICAR <i class="bi bi-arrow-repeat"></i></button>
+            <button type="button" class="btn btn-secondary fw-bold text-white" (click)="cancelarModificacion()">CANCELAR</button>
+          </div>
+          <div>
+          </div>
+        </form>
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </div>

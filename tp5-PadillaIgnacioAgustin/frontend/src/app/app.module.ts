@@ -12,6 +12,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ConverterListComponent } from './components/converter-list/converter-list.component';
 import { ConverterFormComponent } from './components/converter-form/converter-form.component';
+import { FormatoEspectadorPipe } from './pipes/formato-espectador.pipe';
+import { TicketListComponent } from './components/ticket-list/ticket-list.component';
+import { TicketFormComponent } from './components/ticket-form/ticket-form.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { ConverterFormComponent } from './components/converter-form/converter-fo
     ValidacionPrecioDirective,
     ValidacionDniDirective,
     ConverterListComponent,
-    ConverterFormComponent
+    ConverterFormComponent,
+    FormatoEspectadorPipe,
+    TicketListComponent,
+    TicketFormComponent
   ],
   imports: [
     BrowserModule,
