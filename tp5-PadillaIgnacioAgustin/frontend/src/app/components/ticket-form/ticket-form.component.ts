@@ -22,24 +22,24 @@ export class TicketFormComponent implements OnInit {
   constructor(private ticketService:TicketService, private activatedRoute: ActivatedRoute, 
               private router: Router, private espectadorService: EspectadorService) { 
     this.ticket = new Ticket();
-    this.espectadores = Array<Espectador>();
   }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       if (params['id'] == "0"){
         this.accion = "new";
+        this.obtenerEspectadores();
       }else{
         this.accion = "update";
         this.obtenerTicket(params['id']);
       }
     })
-    this.obtenerEspectadores();
   }
 
   // Funcion que trae un ticket registrado en la Base de Datos. 
   // Necesario para la operacion de modificar ticket.
-  obtenerTicket(id:string){
+  async obtenerTicket(id:string){
+    await this.obtenerEspectadores();
     this.ticketService.getTicketById(id).subscribe(
       (result) => {
         Object.assign(this.ticket, result);
@@ -50,10 +50,10 @@ export class TicketFormComponent implements OnInit {
   }
 
   // Funcion que permite obtener todos los espectadores registrados en la Base de Datos.
-  obtenerEspectadores(){
+  async obtenerEspectadores(){
+    this.espectadores = Array<Espectador>();
     this.espectadorService.getEspectadores().subscribe(
       (result) => {
-        this.espectadores = new Array<Espectador>();
         let espectador = new Espectador();
         result.forEach((element:any) => {
           Object.assign(espectador, element);
